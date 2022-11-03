@@ -1,0 +1,51 @@
+:root{
+    --cursor: url('cursor.png'), auto
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    cursor: var(--cursor);
+    font-family: 'Courier New', Courier, monospace;
+    user-select: none;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    background: #6600ff;
+    overflow: hidden;
+}
+
+#points{
+    font-size: 100px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+
+.tiro{
+    --cursor: url('cursor-shoot.png'), auto
+}
+
+.soldier{
+    background-image: url("soldier.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 150px;
+    height: 400px;
+    animation: aparece 1s ;
+    position: absolute;
+    bottom: 0;
+}
+
+.morto{
+    animation: some 1.5s both ;
+}
+
+@keyframes aparece {
+    0%{bottom: -500px;}
+}
+@keyframes some {
+    100%{bottom: -500px;}
+}
