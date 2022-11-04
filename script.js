@@ -5,48 +5,63 @@ let points = 0
 
 class Inimigo {
     constructor() {
-        this.y = this.calcY(0, window.innerWidth - 125)
+        this.y = this.calc(0, window.innerWidth - 125)
         this.x = 0
         this.element
+        this.elementHead
+        this.elementBody
         this.life = true
         this.health = 2
         this.draw()
+        this.checkDeath()
     }
     draw() {
         this.element = document.createElement("div")
         this.element.style.left = this.y + "px"
         this.element.classList.add("soldier")
-        this.element.addEventListener("click", this.getShotPos)
         body.appendChild(this.element)
+        
+        this.elementHead = document.createElement("div")
+        this.elementHead.classList.add("soldier-head")
+        this.element.appendChild(this.elementHead)
+        
+        this.elementBody = document.createElement("div")
+        this.elementBody.classList.add("soldier-body")
+        this.element.appendChild(this.elementBody)
     }
-    getShotPos(event) {
-        console.log(event.pageX)
-        console.log(event.pageY - parseInt(this.y))
+    
+    bodyHit(enemy){
+        enemy.health -= 1 
+        enemy.checkDeath(enemy)
+        
     }
-
-    death(element) {
-        this.health -= 1
-
-        if (this.health <= 0) {
+    
+    headHit(enemy){
+        enemy.health -= 2
+        enemy.checkDeath(enemy)
+    }
+    
+    checkDeath(enemy) {
+        if (this.life == true && this.health <= 0) {
             this.life = false
-        }
-
-        if (this.life == false && this.health == 0) {
-            element.classList.add("morto")
+            this.element.classList.add("morto")
             points += 1
             spawn()
+            setTimeout(()=>{
+                enemy.element.remove()
+            },3000)
         }
     }
 
-    calcY(min, max) {
+    calc(min, max) {
         return Math.floor(Math.random() * (max - min + 1) + min)
     }
 }
 
-function updateDisplay(event) {
-    console.log(event.pageX)
-    console.log(event.pageY)
-}
+// function updateDisplay(event) {
+//     console.log(event.pageX)
+//     console.log(event.pageY)
+// }
 
 function shoot() {
     body.classList.add("tiro")
@@ -58,13 +73,19 @@ function shoot() {
 function spawn() {
     let inimigo = new Inimigo
 
-    inimigo.element.addEventListener("click", () => {
-        inimigo.death(inimigo.element)
+
+    inimigo.elementHead.addEventListener("click",()=>{
+        inimigo.headHit(inimigo)
+    })
+    inimigo.elementBody.addEventListener("click",()=>{
+        inimigo.bodyHit(inimigo)
     })
 }
 
 function update() {
     requestAnimationFrame(update)
+
+
     pointsElement.innerHTML = points
 }
 

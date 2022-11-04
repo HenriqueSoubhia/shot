@@ -1,5 +1,5 @@
 :root{
-    --cursor: url('cursor.png'), auto
+    --cursor: url('imgs/cursor.png'), auto
 }
 
 * {
@@ -25,18 +25,33 @@ body {
 }
 
 .tiro{
-    --cursor: url('cursor-shoot.png'), auto
+    --cursor: url('imgs/cursor-shoot.png'), auto
 }
 
 .soldier{
-    background-image: url("soldier.png");
-    background-repeat: no-repeat;
-    background-size: contain;
-    width: 150px;
-    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items : center;
     animation: aparece 1s ;
     position: absolute;
     bottom: 0;
+}
+
+.soldier-head{
+    background: url("imgs/soldier-head.png");
+    width: 90px;
+    height: 110px;
+}
+
+.soldier-body{
+    background: url("imgs/soldier-body.png");
+    width: 166px;
+    height: 369px;
+}
+
+.soldier-body,.soldier-head{
+    background-repeat: no-repeat;
+    
 }
 
 .morto{
