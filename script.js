@@ -112,7 +112,7 @@ function update() {
                 difficult = 4.2
             }
             if(points == 75){
-                difficult = 5.5
+                difficult = 6
             }
             if(points == 100){
                 alert("ganhou lindo")
