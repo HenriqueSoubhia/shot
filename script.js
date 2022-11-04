@@ -2,7 +2,10 @@ const box = document.querySelector("#box")
 const body = document.querySelector("body")
 const pointsElement = document.querySelector("#points")
 const crosshair = document.querySelector("#crosshair")
+const timeBarTime = document.querySelector("#timeBar-time")
 let points = 0
+let time = 100
+let difficult = 2.5
 
 class Inimigo {
     constructor() {
@@ -47,6 +50,10 @@ class Inimigo {
 
     checkDeath(enemy) {
         if (this.life == true && this.health <= 0) {
+            time += 50
+            if(time >= 100){
+                time = 100
+            }
             this.life = false
             this.element.classList.add("morto")
             points += 1
@@ -61,6 +68,8 @@ class Inimigo {
         return Math.floor(Math.random() * (max - min + 1) + min)
     }
 }
+
+
 
 function mexerCrosshair(event) {
     crosshair.style.top = event.pageY - 16 + "px"
@@ -86,15 +95,52 @@ function spawn() {
     })
 }
 
-function update() {
-    requestAnimationFrame(update)
-
-
-    pointsElement.innerHTML = points
+function timeBar(){
+    setInterval(() => {
+        time -= difficult
+    }, 125);
 }
 
+
+function update() { 
+        requestAnimationFrame(update)
+        
+            if(points == 25){
+                difficult = 3.2
+            }
+            if(points == 50){
+                difficult = 4.2
+            }
+            if(points == 75){
+                difficult = 5.5
+            }
+            if(points == 100){
+                alert("ganhou lindo")
+            }
+            
+            if(time <= 0){
+                setTimeout(()=>{
+                    alert("pedeu noob")
+                },250)
+            }
+        
+            timeBarTime.style.height = time + "%"
+            
+            pointsElement.innerHTML = points
+
+    // console.log("a")
+}
+
+
+
+
+timeBar()
+
 update()
+
 spawn()
+
+
 
 
 //contador de precisão
