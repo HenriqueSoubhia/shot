@@ -1,11 +1,11 @@
 :root{
-    --cursor: url('imgs/cursor.png'), auto
+    --cursor: url('imgs/cursor.png')
 }
 
 * {
     padding: 0;
     margin: 0;
-    cursor: var(--cursor);
+    cursor: none; 
     font-family: 'Courier New', Courier, monospace;
     user-select: none;
 }
@@ -17,15 +17,41 @@ body {
     overflow: hidden;
 }
 
+img{
+    -webkit-user-drag: none ;
+}
+
 #points{
     font-size: 100px;
+    z-index: 999;
+}
+
+#timeBar{
+    width: 25px;
+    height: 500px;
+    background: #c4c4c4;
+    outline: 2px solid black;
+}
+
+.hud{
+    display: flex;
+    flex-direction: column;
     position: absolute;
+    align-items: center;
     right: 20px;
-    top: 20px;
+}
+
+#crosshair{
+    position: absolute;
+    z-index: 1000;
+    pointer-events: none;
+    width: 32px;
+    height: 32px;
+    background: var(--cursor) ;
 }
 
 .tiro{
-    --cursor: url('imgs/cursor-shoot.png'), auto
+    --cursor: url('imgs/cursor-shoot.png')
 }
 
 .soldier{
@@ -35,18 +61,17 @@ body {
     animation: aparece 1s ;
     position: absolute;
     bottom: 0;
+    width: 75px;
+    aspect-ratio: 3/8;
 }
 
 .soldier-head{
-    background: url("imgs/soldier-head.png");
-    width: 90px;
-    height: 110px;
+    width: 60%;
+
 }
 
 .soldier-body{
-    background: url("imgs/soldier-body.png");
-    width: 166px;
-    height: 369px;
+    width: 100%;
 }
 
 .soldier-body,.soldier-head{
@@ -62,5 +87,7 @@ body {
     0%{bottom: -500px;}
 }
 @keyframes some {
+    50%{opacity: 0;}
     100%{bottom: -500px;}
+
 }

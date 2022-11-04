@@ -1,12 +1,13 @@
 const box = document.querySelector("#box")
 const body = document.querySelector("body")
 const pointsElement = document.querySelector("#points")
+const crosshair = document.querySelector("#crosshair")
 let points = 0
 
 class Inimigo {
     constructor() {
-        this.y = this.calc(0, window.innerWidth - 125)
-        this.x = 0
+        this.y = this.calc(0, window.innerWidth - 75)
+        this.x = this.calc(0, window.innerHeight - 225)
         this.element
         this.elementHead
         this.elementBody
@@ -18,38 +19,41 @@ class Inimigo {
     draw() {
         this.element = document.createElement("div")
         this.element.style.left = this.y + "px"
+        this.element.style.bottom = this.x + "px"
         this.element.classList.add("soldier")
         body.appendChild(this.element)
-        
-        this.elementHead = document.createElement("div")
+
+        this.elementHead = document.createElement("img")
         this.elementHead.classList.add("soldier-head")
+        this.elementHead.src = "imgs/soldier-head.png"
         this.element.appendChild(this.elementHead)
-        
-        this.elementBody = document.createElement("div")
+
+        this.elementBody = document.createElement("img")
         this.elementBody.classList.add("soldier-body")
+        this.elementBody.src = "imgs/soldier-body.png"
         this.element.appendChild(this.elementBody)
     }
-    
-    bodyHit(enemy){
-        enemy.health -= 1 
+
+    bodyHit(enemy) {
+        enemy.health -= 1
         enemy.checkDeath(enemy)
-        
+
     }
-    
-    headHit(enemy){
+
+    headHit(enemy) {
         enemy.health -= 2
         enemy.checkDeath(enemy)
     }
-    
+
     checkDeath(enemy) {
         if (this.life == true && this.health <= 0) {
             this.life = false
             this.element.classList.add("morto")
             points += 1
             spawn()
-            setTimeout(()=>{
+            setTimeout(() => {
                 enemy.element.remove()
-            },3000)
+            }, 3000)
         }
     }
 
@@ -58,15 +62,15 @@ class Inimigo {
     }
 }
 
-// function updateDisplay(event) {
-//     console.log(event.pageX)
-//     console.log(event.pageY)
-// }
+function mexerCrosshair(event) {
+    crosshair.style.top = event.pageY - 16 + "px"
+    crosshair.style.left = event.pageX - 16 + "px"
+}
 
 function shoot() {
-    body.classList.add("tiro")
+    crosshair.classList.add("tiro")
     setTimeout(() => {
-        body.classList.remove("tiro")
+        crosshair.classList.remove("tiro")
     }, 250)
 }
 
@@ -74,10 +78,10 @@ function spawn() {
     let inimigo = new Inimigo
 
 
-    inimigo.elementHead.addEventListener("click",()=>{
+    inimigo.elementHead.addEventListener("click", () => {
         inimigo.headHit(inimigo)
     })
-    inimigo.elementBody.addEventListener("click",()=>{
+    inimigo.elementBody.addEventListener("click", () => {
         inimigo.bodyHit(inimigo)
     })
 }
@@ -90,9 +94,11 @@ function update() {
 }
 
 update()
-
 spawn()
 
 
-// body.addEventListener("click", updateDisplay);
+//contador de precisão
+
+
+body.addEventListener("mousemove", mexerCrosshair);
 body.addEventListener("click", shoot)
